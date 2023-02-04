@@ -44,4 +44,7 @@ message Transfer {
   // available when `schema = ERC721` or `schema = ERC1155`. When `schema = ERC20`, the token id
   // will be empty string "" as the contract itself is the token identifier.
   string token_id = 7;
+
+  // Contract address of the token contract.
+  string contract = 9; 
 }
