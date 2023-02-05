@@ -20,7 +20,7 @@ codegen:
 
 .PHONY: sink_files
 sink_files: build
-	substreams-sink-files run --file-working-dir="$(ROOT_DIR)/sink-files/working" --state-store="$(ROOT_DIR)/sink-files/workdir/state.yaml" $(ENDPOINT) "$(ROOT_DIR)/substreams.yaml" map_transfers ".transfers[]" "$(ROOT_DIR)/sink-files/out"
+	./substreams-sink-files run --encoder=lines --file-working-dir="$(ROOT_DIR)/sink-files/working" --state-store="$(ROOT_DIR)/sink-files/workdir/state.yaml" $(ENDPOINT) "$(ROOT_DIR)/substreams.yaml" csv_out "$(ROOT_DIR)/out_csv" "16300000:16301000" 
 
 .PHONY: package
 package: build

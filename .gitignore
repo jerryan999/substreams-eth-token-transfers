@@ -4,3 +4,7 @@
 /target
 *.spkg
 /sink-files
+
+out/
+out_csv
+substreams-sink-files

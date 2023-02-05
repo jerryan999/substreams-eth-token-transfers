@@ -47,4 +47,10 @@ message Transfer {
 
   // Contract address of the token contract.
   string contract = 9; 
+
+  // Block number of the block in which the transfer happened.
+  uint64 block_number = 10;
+
+  // Block timestamp
+  uint64 block_timestamp = 11;
 }

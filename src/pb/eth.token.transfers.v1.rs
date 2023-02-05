@@ -42,6 +42,12 @@ pub struct Transfer {
     /// Contract address of the token contract.
     #[prost(string, tag="9")]
     pub contract: ::prost::alloc::string::String,
+    /// Block number of the block in which the transfer happened.
+    #[prost(uint64, tag="10")]
+    pub block_number: u64,
+    // Block timestamp
+    #[prost(uint64, tag="11")]
+    pub block_timestamp: u64,
 }
 /// Nested message and enum types in `Transfer`.
 pub mod transfer {
