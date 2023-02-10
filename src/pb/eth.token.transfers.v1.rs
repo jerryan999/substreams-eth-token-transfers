@@ -16,8 +16,8 @@ pub struct Transfer {
     #[prost(string, tag="2")]
     pub trx_hash: ::prost::alloc::string::String,
     /// The index of the log within the transaction's receipts of the block.
-    #[prost(uint64, tag="3")]
-    pub log_index: u64,
+    #[prost(string, tag="3")]
+    pub log_index: ::prost::alloc::string::String,
     /// The person that received the transfer, might not be the same as the one that did initiated the
     /// transaction.
     #[prost(string, tag="4")]
@@ -45,13 +45,12 @@ pub struct Transfer {
     /// Block number of the block in which the transfer happened.
     #[prost(uint64, tag="10")]
     pub block_number: u64,
-    // Block timestamp
+    /// Block timestamp
     #[prost(uint64, tag="11")]
     pub block_timestamp: u64,
 }
 /// Nested message and enum types in `Transfer`.
 pub mod transfer {
-    #[derive(::serde::Serialize)]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum Schema {

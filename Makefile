@@ -32,7 +32,7 @@ sink_files_bsc: build
 # for polygon
 .PHONY: sink_files_polygon
 sink_files_polygon: build
-	substreams-sink-files run --encoder=lines --file-working-dir="$(ROOT_DIR)/sink-files-polygon/working" --state-store="$(ROOT_DIR)/sink-files-polygon/workdir/state.yaml" polygon.streamingfast.io:443 "$(ROOT_DIR)/substreams.yaml" jsonl_out "$(ROOT_DIR)/chain-transfer-polygon" "$(START_BLOCK):-1" 
+	substreams-sink-files run --encoder=lines  --file-working-dir="$(ROOT_DIR)/sink-files-polygon/working" --state-store="$(ROOT_DIR)/sink-files-polygon/workdir/state.yaml" polygon.streamingfast.io:443 "$(ROOT_DIR)/substreams.yaml" jsonl_out "$(ROOT_DIR)/chain-transfer-polygon" "$(START_BLOCK):-1" 
 
 
 .PHONY: package

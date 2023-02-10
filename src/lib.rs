@@ -52,19 +52,19 @@ fn get_transfers<'a>(blk: &'a eth::Block) -> impl Iterator<Item = Transfer> + 'a
         receipt.receipt.logs.iter().flat_map(|log| {
             let contract = &log.address;
             if let Some(event) = ERC20TransferEvent::match_and_decode(log) {
-                return vec![new_erc20_transfer(blk, contract, hash, log.block_index, event)];
+                return vec![new_erc20_transfer(blk, contract, hash, log.block_index.to_string(), event)];
             }
 
             if let Some(event) = ERC721TransferEvent::match_and_decode(log) {
-                return vec![new_erc721_transfer(blk, contract, hash, log.block_index, event)];
+                return vec![new_erc721_transfer(blk, contract, hash, log.block_index.to_string(), event)];
             }
 
             if let Some(event) = ERC1155TransferSingleEvent::match_and_decode(log) {
-                return vec![new_erc1155_single_transfer(blk, contract, hash, log.block_index, event)];
+                return vec![new_erc1155_single_transfer(blk, contract, hash, log.block_index.to_string(), event)];
             }
 
             if let Some(event) = ERC1155TransferBatchEvent::match_and_decode(log) {
-                return new_erc1155_batch_transfer(blk,contract, hash, log.block_index, event);
+                return new_erc1155_batch_transfer(blk,contract, hash, log.block_index.to_string(), event);
             }
 
             vec![]
@@ -72,7 +72,7 @@ fn get_transfers<'a>(blk: &'a eth::Block) -> impl Iterator<Item = Transfer> + 'a
     })
 }
 
-fn new_erc20_transfer(blk:&eth::Block, contract: &[u8], hash: &[u8], log_index: u32, event: ERC20TransferEvent) -> Transfer {
+fn new_erc20_transfer(blk:&eth::Block, contract: &[u8], hash: &[u8], log_index: String, event: ERC20TransferEvent) -> Transfer {
     let header = blk.header.as_ref().unwrap();
     let timestamp = header.timestamp.as_ref().unwrap().seconds as u64;
 
@@ -82,8 +82,7 @@ fn new_erc20_transfer(blk:&eth::Block, contract: &[u8], hash: &[u8], log_index: 
         to: Hex(&event.to).to_string(),
         quantity: event.value.to_string(),
         trx_hash: Hex(hash).to_string(),
-        log_index: log_index as u64,
-
+        log_index: log_index.to_string(),
         operator: "".to_string(),
         token_id: "".to_string(),
         contract: Hex(contract).to_string(),
@@ -91,7 +90,7 @@ fn new_erc20_transfer(blk:&eth::Block, contract: &[u8], hash: &[u8], log_index: 
         block_timestamp: timestamp}
 }
 
-fn new_erc721_transfer(blk:&eth::Block,contract:&[u8], hash: &[u8], log_index: u32, event: ERC721TransferEvent) -> Transfer {
+fn new_erc721_transfer(blk:&eth::Block,contract:&[u8], hash: &[u8], log_index:  String, event: ERC721TransferEvent) -> Transfer {
     let header = blk.header.as_ref().unwrap();
     let timestamp = header.timestamp.as_ref().unwrap().seconds as u64;
 
@@ -102,7 +101,7 @@ fn new_erc721_transfer(blk:&eth::Block,contract:&[u8], hash: &[u8], log_index: u
         to: Hex(&event.to).to_string(),
         quantity: "1".to_string(),
         trx_hash: Hex(hash).to_string(),
-        log_index: log_index as u64,
+        log_index: log_index.to_string(),
         token_id: event.token_id.to_string(),
         operator: "".to_string(),
         contract: Hex(contract).to_string(),
@@ -115,7 +114,7 @@ fn new_erc1155_single_transfer(
     blk: &eth::Block,
     contract:&[u8],  
     hash: &[u8],
-    log_index: u32,
+    log_index :String,
     event: ERC1155TransferSingleEvent,
 ) -> Transfer {
     new_erc1155_transfer(
@@ -135,7 +134,7 @@ fn new_erc1155_batch_transfer(
     blk: &eth::Block,
     contract:&[u8],
     hash: &[u8],
-    log_index: u32,
+    log_index:  String,
     event: ERC1155TransferBatchEvent,
 ) -> Vec<Transfer> {
     if event.ids.len() != event.values.len() {
@@ -160,7 +159,7 @@ fn new_erc1155_batch_transfer(
                 blk,
                 contract,
                 hash,
-                log_index,
+                log_index.clone() + "/" + &i.to_string(),   // This is userful for downstream processing
                 &event.from,
                 &event.to,
                 id,
@@ -175,7 +174,7 @@ fn new_erc1155_transfer(
     blk: &eth::Block,
     contract:&[u8],
     hash: &[u8],
-    log_index: u32,
+    log_index:  String,
     from: &[u8],
     to: &[u8],
     token_id: &BigInt,
@@ -191,7 +190,7 @@ fn new_erc1155_transfer(
         to: Hex(to).to_string(),
         quantity: quantity.to_string(),
         trx_hash: Hex(hash).to_string(),
-        log_index: log_index as u64,
+        log_index: log_index.to_string(),
         operator: Hex(operator).to_string(),
         token_id: token_id.to_string(),
         contract: Hex(contract).to_string(),
