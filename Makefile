@@ -23,6 +23,10 @@ codegen:
 sink_files_eth: build
 	substreams-sink-files run --encoder=lines --file-working-dir="$(ROOT_DIR)/sink-files/working" --state-store="$(ROOT_DIR)/sink-files/workdir/state.yaml" mainnet.eth.streamingfast.io:443 "$(ROOT_DIR)/substreams.yaml" jsonl_out "$(ROOT_DIR)/chain-transfer" "$(START_BLOCK):-1" 
 
+.PHONY: sink_files_eth_with_filter
+sink_files_eth_with_filter: build
+	substreams-sink-files run --encoder=lines --file-working-dir="$(ROOT_DIR)/sink-files/working" --state-store="$(ROOT_DIR)/sink-files/workdir/state.yaml" mainnet.eth.streamingfast.io:443 "$(ROOT_DIR)/substreams.yaml" jsonl_out_with_filter  "$(ROOT_DIR)/chain-transfer" "$(START_BLOCK):-1" 
+
 
 # for bsc
 .PHONY: sink_files_bsc

@@ -34,6 +34,14 @@ modules:
     output:
       type: proto:substreams.sink.files.v1.Lines
 
+  - name: jsonl_out_with_filter
+    kind: map
+    initialBlock: 0
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:substreams.sink.files.v1.Lines
+
   - name: csv_out
     kind: map
     initialBlock: 0

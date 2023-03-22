@@ -37,6 +37,32 @@ fn jsonl_out(blk: eth::Block) -> Result<Lines, substreams::errors::Error> {
     })
 }
 
+/// Extracts transfers events from the filters contracts
+#[substreams::handlers::map]  // means 
+fn jsonl_out_with_filter(blk: eth::Block) -> Result<Lines, substreams::errors::Error> { 
+    Ok(Lines {
+        lines: get_transfers(&blk)
+            .filter(|trx| {
+                let contracts = vec![
+                    "06a6a7af298129e3a2ab396c9c06f91d3c54aba8",
+                    "3bf3d4e80b91d2731abcb154c21ad35abb417fd2",
+                    "552d72f86f04098a4eaeda6d7b665ac12f846ad2",
+                    "6966730b1435168880b35faa1e75de0988ee2e39",
+                    "71c118b00759b0851785642541ceb0f4ceea0bd5",
+                    "79986af15539de2db9a5086382daeda917a9cf0c",
+                    "abc7e6c01237e8eef355bba2bf925a730b714d5f",
+                    "c70be5b7c19529ef642d16c10dfe91c58b5c3bf0",
+                    "d6076efe1e577deec21afab6ed383b47e9d8dec6",
+                    "cc9a66acf8574141b0e025202dd57649765a4be7",
+                ];
+                contracts.contains(&trx.contract.as_str())
+            })
+            .map(|trx| serde_json::to_string(&trx).unwrap())
+            .collect(),
+    })
+}
+
+
 /// Extracts transfers events from the contract(s)
 #[substreams::handlers::map]
 fn csv_out(blk: eth::Block) -> Result<Lines, substreams::errors::Error> {
