@@ -54,6 +54,27 @@ fn jsonl_out_with_filter(blk: eth::Block) -> Result<Lines, substreams::errors::E
                     "c70be5b7c19529ef642d16c10dfe91c58b5c3bf0",
                     "d6076efe1e577deec21afab6ed383b47e9d8dec6",
                     "cc9a66acf8574141b0e025202dd57649765a4be7",
+
+                    "847342e826d943e0c7950d0a88882b75a1b19b9f",
+                    "ae36155a55f04a696b8362777620027882b31db5",
+                    "7907f43283202b0a821fea95157fecf0c751dcb5",
+                    "b5f1457d6fba1956fb8d31b0b7caca14bde0be4b",
+                    "0167e9bcc26d02bf71113bbd1b6ea8c9549cd52c",
+                    "15dd37a83564559927bbdcdbfcf85f60a2c6a419",
+                    "048aa6e69d5117bd665af4128383a6982b8367b3",
+                    "865ec58b06bf6305b886793aa20a2da31d034e68",
+                    "f81421fc15300c5a8cca9afe12f5cbad502fa756",
+                    "8b0fde007458ee153bd0f66cd448af5fb3d99b43",
+                    "efcb0688c679d99ee1b78876e11ebe5be2e4292b",
+                    "d084b83c305dafd76ae3e1b4e1f1fe2ecccb3988",
+                    "22c5543d1a35178cb03b33f929a959145e538532",
+                    "35a5cb585d51d836922b78a9bb1f5c04635c39b6",
+                    "8dc89f4716e027394bba225b82328c1ea2ea58bf",
+                    "f203ca1769ca8e9e8fe1da9d147db68b6c919817",
+                    "08f40811c7d6c013744166f3d4cb1a9a92d3d54e",
+                    "de4ce5447ce0c67920a1371605a39187cb6847c8",
+                    "73350fdf1bfd08555d6fe440d3ffa87104d1da19",
+                    "436da116249044e8b4464f0cf21dd93311d88190",
                 ];
                 contracts.contains(&trx.contract.as_str())
             })
