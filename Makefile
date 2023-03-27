@@ -33,10 +33,22 @@ sink_files_eth_with_filter: build
 sink_files_bsc: build
 	substreams-sink-files run --encoder=lines --file-working-dir="$(ROOT_DIR)/sink-files-bsc/working" --state-store="$(ROOT_DIR)/sink-files-bsc/workdir/state.yaml" bnb.streamingfast.io:443 "$(ROOT_DIR)/substreams.yaml" jsonl_out "$(ROOT_DIR)/chain-transfer-bsc" "$(START_BLOCK):-1" 
 
+
+.PHONY: sink_files_bsc_with_filter
+sink_files_bsc_with_filter: build
+	substreams-sink-files run --encoder=lines --file-working-dir="$(ROOT_DIR)/sink-files-bsc/working" --state-store="$(ROOT_DIR)/sink-files-bsc/workdir/state.yaml" bnb.streamingfast.io:443 "$(ROOT_DIR)/substreams.yaml" jsonl_out_with_filter  "$(ROOT_DIR)/chain-transfer-bsc" "$(START_BLOCK):-1" 
+
+
 # for polygon
 .PHONY: sink_files_polygon
 sink_files_polygon: build
 	substreams-sink-files run --encoder=lines  --file-working-dir="$(ROOT_DIR)/sink-files-polygon/working" --state-store="$(ROOT_DIR)/sink-files-polygon/workdir/state.yaml" polygon.streamingfast.io:443 "$(ROOT_DIR)/substreams.yaml" jsonl_out "$(ROOT_DIR)/chain-transfer-polygon" "$(START_BLOCK):-1" 
+
+
+.PHONY: sink_files_polygon_with_filter
+sink_files_polygon_with_filter: build
+	substreams-sink-files run --encoder=lines --file-working-dir="$(ROOT_DIR)/sink-files-polygon/working" --state-store="$(ROOT_DIR)/sink-files-polygon/workdir/state.yaml" polygon.streamingfast.io:443 "$(ROOT_DIR)/substreams.yaml" jsonl_out_with_filter  "$(ROOT_DIR)/chain-transfer-polygon" "$(START_BLOCK):-1" 
+
 
 
 .PHONY: package
